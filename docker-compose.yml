@@ -1,8 +1,25 @@
-version: "2"
+version: "3.3"
 
 services:
-  app:
+  server_app:
     build: ./server
-    command: puma -p 3000
+    entrypoint: rake
+    command: ["migrate", "start"]
     ports:
       - "3000:3000"
+    environment:
+      - POSTGRES_USER=alexpurhalo
+      - POSTGRES_PASSWORD=123123
+      - POSTGRES_DB=notes
+      - DB_HOST=db
+    depends_on:
+      - db
+
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=alexpurhalo
+      - POSTGRES_PASSWORD=123123
+      - POSTGRES_DB=notes
+    volumes:
+      - ./server/tmp/data/postgres:/var/lib/postgresql/data

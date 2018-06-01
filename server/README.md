@@ -2,10 +2,28 @@
 
 Start server
 ```
-$ puma -p 3000
+rake start 
 ```
 
-Receive message
+Migrate schema
 ```
-$ curl -X GET 'http://localhost:3000'
+rake migrate
+```
+
+Database console
+```
+rake console
+```
+
+Receive notes
+```
+curl -X GET 'http://localhost:3000/api/v1/notes'
+```
+
+Add note
+```
+curl -X POST \
+-d "{\"body\":\"Hello World\"}" \
+-H "Content-Type: application/json" \
+http://localhost:3000/api/v1/notes
 ```

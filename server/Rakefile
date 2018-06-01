@@ -1,0 +1,26 @@
+require 'rubygems'
+require 'bundler/setup'
+
+require 'rake'
+
+host     = ENV['DB_HOST']
+database = ENV['POSTGRES_DB']
+user     = ENV['POSTGRES_USER']
+password = ENV['POSTGRES_PASSWORD']
+
+connection = "postgres://#{user}:#{password}@#{host}/#{database}"
+
+desc 'run server'
+task :start do
+  sh "puma -p 3000"
+end
+
+desc 'run console'
+task :console do
+  sh "sequel #{connection} -L 'models'"
+end
+
+desc 'migrate schema'
+task :migrate do
+  sh "sequel -m db/migrations #{connection}"
+end
