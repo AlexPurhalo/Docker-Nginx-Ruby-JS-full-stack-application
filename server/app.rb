@@ -18,11 +18,11 @@ DB = Sequel.connect(
 Dir['./models/*.rb'].each { |file| require file }
 
 class App < Sinatra::Base
-  get '/api/v1/notes' do
+  get '/notes' do
     Note.all.map(&:values).to_json
   end
 
-  post '/api/v1/notes' do
+  post '/notes' do
     params = JSON.parse(request.body.read)
 
     Note.create(params)
