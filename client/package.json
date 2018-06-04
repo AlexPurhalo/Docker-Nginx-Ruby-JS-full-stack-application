@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "node --max_old_space_size=1000 node_modules/webpack/bin/webpack.js --progress",
+    "build": "node --max_old_space_size=1000 node_modules/webpack/bin/webpack.js --progress",
     "start": "NODE_ENV=production node server.js",
-    "dev": "NODE_ENV=dev webpack-dev-server --watch"
+    "dev": "NODE_ENV=dev webpack-dev-server --watch --host 0.0.0.0"
   },
   "author": "",
   "license": "ISC",

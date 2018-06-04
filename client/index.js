@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 
 const App = () => (
   <div>
-    <h3>Hello World!!!! SHOT!</h3>
+    <h3>Rabotaet :)</h3>
     <p>My name is Alex and this is the test application</p>
   </div>
 )

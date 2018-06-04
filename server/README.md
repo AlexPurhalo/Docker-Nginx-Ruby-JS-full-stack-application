@@ -27,3 +27,8 @@ curl -X POST \
 -H "Content-Type: application/json" \
 http://localhost:3000/api/v1/notes
 ```
+
+Running with Docker 
+```
+
+```

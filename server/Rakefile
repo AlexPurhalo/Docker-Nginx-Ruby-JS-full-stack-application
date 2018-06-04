@@ -12,7 +12,11 @@ connection = "postgres://#{user}:#{password}@#{host}/#{database}"
 
 desc 'run server'
 task :start do
-  sh "puma -p 3000"
+  if ENV["RACK_ENV"] === 'production'
+    sh "puma -p 3000"
+  else
+    sh "rerun --background -- rackup -p 3000 -o 0.0.0.0"
+  end
 end
 
 desc 'run console'
@@ -23,4 +27,9 @@ end
 desc 'migrate schema'
 task :migrate do
   sh "sequel -m db/migrations #{connection}"
+end
+
+desc 'run tests'
+task :test do
+  sh "rspec --require spec_helper --color --format documentation"
 end

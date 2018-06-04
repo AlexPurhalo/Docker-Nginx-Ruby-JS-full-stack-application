@@ -12,4 +12,5 @@ app.get('*', (req, res) => {
 
 app.listen(port);
 
+console.log('Works?')
 console.log('!Server started, port: ' + port);

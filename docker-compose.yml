@@ -2,39 +2,43 @@ version: "3.3"
 
 services:
   client:
-    build: ./client
+    build:
+      context: ./client
+      args:
+        - node_env=development
     container_name: client_app
-    entrypoint: npm
-    command: start
     ports:
-      - '3000:8080'
+      - '8080'
     volumes:
       - ./client:/client_app
+    env_file:
+        - env.list
 
   server:
-    build: ./server
+    build:
+      context: ./server
+      args:
+        - rack_env=development
     container_name: server_app
-    entrypoint: rake
     command: ["migrate", "start"]
     ports:
-      - "3001:3000"
-    environment:
-      - POSTGRES_USER=alexpurhalo
-      - POSTGRES_PASSWORD=123123
-      - POSTGRES_DB=notes
-      - DB_HOST=db
+      - "3000"
+    env_file:
+      - env.list
     depends_on:
       - db
+    volumes:
+      - ./server:/server_app
 
   db:
     image: postgres
-    container_name: database
-    environment:
-      - POSTGRES_USER=alexpurhalo
-      - POSTGRES_PASSWORD=123123
-      - POSTGRES_DB=notes
+    container_name: db
+    env_file:
+      - env.list
+    ports:
+      - "5432:5432"
     volumes:
-      - ./server/tmp/data/postgres:/var/lib/postgresql/data
+      - ./tmp/data/postgres:/var/lib/postgresql/data
 
   nginx:
     image: nginx:latest
