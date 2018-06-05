@@ -21,4 +21,10 @@ class App < Sinatra::Base
   get '/api/v1/notes' do
     Note.all.map(&:values).to_json
   end
+
+  post '/api/v1/notes' do
+    values = JSON.parse(request.body.read)
+    Note.create(values)
+    Note.all.map(&:values).to_json
+  end
 end
